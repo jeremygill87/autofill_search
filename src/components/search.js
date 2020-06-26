@@ -13,6 +13,11 @@ class Search extends React.Component {
             message: ""
         };
     }
+
+    handleInputChange = (event) => {
+        const query = event.target.value;
+        this.setState({ query, loading: true, message:"" });
+    };
     render() {
         return (
             <div className="container">
@@ -27,6 +32,7 @@ class Search extends React.Component {
                      value=""
                      id="search-input"
                      placeholder="Search..."
+                     onChange={this.handleInputChange}
                      />
                      <i className="fa fa-search search-icon"/>
                 </label>

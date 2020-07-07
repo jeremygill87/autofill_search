@@ -1,6 +1,7 @@
 import React from "react";
 import "./search.css";
 import axios from 'axios';
+import Loader from "../loader.gif";
 
 class Search extends React.Component {
 
@@ -66,8 +67,31 @@ class Search extends React.Component {
         }
         
     };
-    
+
+    renderSearchResults = () => {
+        const {results} = this.state;
+
+        if(Object.keys(results).length && results.length) {
+            return (
+                <div className="results-container">
+                    {results.map((result) => {
+                        return (
+                            <a key={result.id}
+                            href={result.previewURL} className="result-items">
+                                <h6 className="image-username">{result.user}</h6>
+                                <div className="image-wrapper">
+                                    <img className="image" src={result.previewURL} alt={result.user}/>
+                                </div>
+                            </a>
+                        );
+                    })}
+                </div>
+            );
+        }
+    };  
+
     render() {
+        const { query } = this.state;
         return (
             <div className="container">
                 {/*Heading*/}
@@ -85,6 +109,13 @@ class Search extends React.Component {
                      />
                      <i className="fa fa-search search-icon"/>
                 </label>
+
+                {/* Error message */}
+                {message && <p className="message">{message}</p>}
+
+                {/* Loader */}
+                <img src={Loader} className={`search-loading ${loading ? 'show' : 'hide' }`} alt="loader"/>
+                {this.renderSearchResults()}
             </div>
         )
     }

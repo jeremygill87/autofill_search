@@ -55,8 +55,18 @@ class Search extends React.Component {
 
     handleInputChange = (event) => {
         const query = event.target.value;
-        this.setState({ query, loading: true, message:"" });
+
+        if ( !query ) {
+            this.setState({ query, results: {}, message:'' });
+        } else {
+            this.setState({ query, loading: true, message: '' },
+            () => {
+                this.fetchSearchResults(1, query);
+            });
+        }
+        
     };
+    
     render() {
         return (
             <div className="container">
